@@ -3,7 +3,7 @@
 
 #include <QVector>
 #include <QString>
-#include <QPoint>
+#include <QRect>
 
 class Internal
 {
@@ -12,6 +12,11 @@ public:
 
     QString className;
     QString name;
+
+    QRect rect;
+
+    Internal *parent;
+    QVector<Internal*> children;
 
 //    enum Layout
 //    {
@@ -26,9 +31,6 @@ public:
 //        Column
 //    } layoutType;
 
-    QPoint coords;
-
-    QVector<Internal*> children;
 };
 
 #endif // INTERNAL_H

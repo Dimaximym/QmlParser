@@ -93,6 +93,7 @@ void QmlParser::checkChildren(QDomNode &node, Internal *parent)
             child = new Internal;
 //            qDebug() << "before check: " << childNode.nodeName() << "node:" << node.nodeName();
             //                 << "NODE TYPE: " << childNode.isAttr() << childNode.isElement() << childNode.isText() << childNode.isEntity() << childNode.isCharacterData();
+            child->parent = parent;
             parent->children.push_back(child);
 
             if (childNode.nodeName() == "widget")
