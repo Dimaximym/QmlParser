@@ -22,11 +22,11 @@ public:
     virtual ~QmlParser() {}
 
     void checkChildren(QDomNode &node, Internal *parent);
-
+    void generateInternals(QDomNode &node);
     // Testing functional
     void outputInternal();
     void outputChild(Internal *obj);
 
-    QVector<Internal*> internal;
+    QVector<Internal*> internals;
 };
 #endif // QMLPARSER_H

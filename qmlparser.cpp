@@ -27,28 +27,9 @@ QmlParser::QmlParser(QObject *parent)
     QDomElement root = doc.documentElement();
     if (root.tagName() != "ui")
         qDebug() << "bad xml file: not ui file";
-    qDebug() << root.tagName();
 
     QDomNode node = root.firstChild();
-    Internal *_parent = nullptr;
-
-    while (!node.isNull())
-    {
-        if (node.nodeName() == "widget")
-        {
-//            qDebug() << "\tmain():" << node.nodeName() << "=" << node.attributes().namedItem("class").nodeValue();
-            _parent = new Internal;
-            _parent->className = node.attributes().namedItem("class").nodeValue();
-            _parent->name = node.attributes().namedItem("name").nodeValue();
-
-            internal.push_back(_parent);
-        }
-//        else
-//            _parent->className = "parent: not a widget";
-        if (node.hasChildNodes())
-            checkChildren(node, _parent);
-        node = node.nextSibling();
-    }
+    generateInternals(node);
 
     outputInternal();
 
@@ -80,6 +61,37 @@ QmlParser::QmlParser(QObject *parent)
 
 }
 
+void QmlParser::generateInternals(QDomNode &node)
+{
+    while (!node.isNull())
+    {
+        Internal * internal= nullptr;
+
+        // Если элемент корневой, то выделить родителя
+        if (node.parentNode().nodeName() == "ui")
+        {
+            if (node.nodeName() == "widget")
+            {
+                //            qDebug() << "\tmain():" << node.nodeName() << "=" << node.attributes().namedItem("class").nodeValue();
+                internal = new Internal;
+                internal->className = node.attributes().namedItem("class").nodeValue();
+                internal->name = node.attributes().namedItem("name").nodeValue();
+
+                internals.push_back(internal);
+            }
+
+            if (node.hasChildNodes())
+                checkChildren(node, internal);
+            node = node.nextSibling();
+        }
+        else
+        {
+            checkChildren(node, internal);
+        }
+    }
+
+}
+
 void QmlParser::checkChildren(QDomNode &node, Internal *parent)
 {
     Internal *child = nullptr;
@@ -88,33 +100,32 @@ void QmlParser::checkChildren(QDomNode &node, Internal *parent)
 //    QString output = "c():" + node.nodeName() +  "->";
     while (!childNode.isNull())
     {
-        if (!childNode.isText())
-        {
-            child = new Internal;
 //            qDebug() << "before check: " << childNode.nodeName() << "node:" << node.nodeName();
             //                 << "NODE TYPE: " << childNode.isAttr() << childNode.isElement() << childNode.isText() << childNode.isEntity() << childNode.isCharacterData();
+
+        if (childNode.nodeName() == "widget")
+        {
+            child = new Internal;
             child->parent = parent;
+            child->className = childNode.attributes().namedItem("class").nodeValue();
+            child->name = childNode.attributes().namedItem("name").nodeValue();
             parent->children.push_back(child);
-
-            if (childNode.nodeName() == "widget")
-            {
 //                qDebug() << "\t" << output << childNode.nodeName() << "=" << childNode.attributes().namedItem("class").nodeValue();
-                child->className = childNode.attributes().namedItem("class").nodeValue();
 
-            }
-            else
-            {
-                if (!childNode.isText())
-                    child->className =  "not a widget: " + childNode.nodeName();
-            }
-
-            if (childNode.hasChildNodes())
-                checkChildren(childNode, child);
         }
+//            else
+//            {
+//                if (!childNode.isText())
+//                    child->className =  "not a widget: " + childNode.nodeName();
+//            }
+
+        if (childNode.hasChildNodes())
+            checkChildren(childNode, child);
 
         childNode = childNode.nextSibling();
     }
 }
+
 
 void QmlParser::outputChild(Internal *obj)
 {
@@ -124,8 +135,8 @@ void QmlParser::outputChild(Internal *obj)
         for(auto child: obj->children)
         {
             QString tab;
-            for (int i = 0; i < deep; ++i) tab += ' ';
-            qDebug() << tab << child->className;
+            for (int i = 0; i < deep; ++i) tab += "  ";
+            qDebug() << tab << child->className << "(" << child->name << ")";
             ++deep;
             outputChild(child);
             --deep;
@@ -136,7 +147,7 @@ void QmlParser::outputChild(Internal *obj)
 void QmlParser::outputInternal()
 {
     qDebug() << "\n\nCreating QML...";
-    for(auto obj: internal)
+    for(auto obj: internals)
     {
         qDebug() << obj->className;
         outputChild(obj);

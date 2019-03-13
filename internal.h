@@ -9,6 +9,7 @@ class Internal
 {
 public:
     Internal()/*: layoutMode(Layout::Coordinates)*/ {}
+    virtual ~Internal() {}
 
     QString className;
     QString name;
@@ -17,6 +18,8 @@ public:
 
     Internal *parent;
     QVector<Internal*> children;
+
+    virtual void generateQML();
 
 //    enum Layout
 //    {

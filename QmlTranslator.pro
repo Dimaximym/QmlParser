@@ -29,12 +29,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     qmlparser.cpp \
-    internal.cpp
+    internal.cpp \
+    label.cpp
 
 HEADERS += \
         mainwindow.h \
     qmlparser.h \
-    internal.h
+    internal.h \
+    label.h
 
 FORMS += \
         mainwindow.ui
