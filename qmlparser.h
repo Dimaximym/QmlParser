@@ -21,8 +21,10 @@ public:
     QmlParser(QObject *parent);
     virtual ~QmlParser() {}
 
-    void checkChildren(QDomNode &node, Internal *parent);
-    void generateInternals(QDomNode &node);
+    // Generate QVector of internal view .ui file
+    void generateInternals(QDomNode &node, Internal *parent = nullptr);
+    void generateQML();
+
     // Testing functional
     void outputInternal();
     void outputChild(Internal *obj);

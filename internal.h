@@ -4,6 +4,7 @@
 #include <QVector>
 #include <QString>
 #include <QRect>
+#include <QDomNode>
 
 class Internal
 {
@@ -11,15 +12,16 @@ public:
     Internal()/*: layoutMode(Layout::Coordinates)*/ {}
     virtual ~Internal() {}
 
-    QString className;
-    QString name;
+    QString _className;
+    QString _name;
 
-    QRect rect;
+    QRect _rect;
 
-    Internal *parent;
-    QVector<Internal*> children;
+    Internal *_parent;
+    QVector<Internal*> _children;
 
-    virtual void generateQML();
+    virtual void generateFromUI(QDomNode &node);
+    virtual QString generateQML();
 
 //    enum Layout
 //    {
