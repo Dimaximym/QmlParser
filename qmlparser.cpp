@@ -35,7 +35,7 @@ QmlParser::QmlParser(QObject *parent)
 
     outputInternal();
 
-
+    generateQML();
 
 }
 
@@ -115,18 +115,51 @@ void QmlParser::generateQML()
     QFile qmlFile("F:/Development/C++/QmlTranslator/test.qml");
     QString str = "import QtQuick 2.0\nimport QtQuick.Controls 2.1\n"
                   "import QtQuick.Window 2.0\n"
-                  "ApplicationWindow {\nid: window\nvisible: true\n"
-                  "Rectangle {"
-                  "anchors.fill: parent;"
-                  "color: \"red\";"
-                  "}"
-                  ""
-                  ""
-                  "}";
+                  "ApplicationWindow {\nid: window\nvisible: true\n";
+//                  "Rectangle {"
+//                  "anchors.fill: parent;"
+//                  "color: \"red\";"
+//                  "}"
+//                  ""
+//                  ""
+//                  "}";
+
+    // TEST
+//    Internal internal;
+//    Label label;
+
+//    str += internal.generateQML() + "} }";
+
+    // Parsing internal view
+
+    /// Лямбда-функция для рекурсивного обхода
+    /// дерева _internals
+    auto travers = [ &str/*, &endRecursion, &result*/](auto &self, Internal *internal)
+    {
+        if (internal == nullptr)
+            return;
+
+        str += internal->generateQML();
+        if (internal->_children.isEmpty())
+        {
+            str += "}\n";
+            return;
+        }
+        for (int i = 0; i < internal->_children.size(); ++i)
+        {
+            self(self, internal->_children.at(i));
+        }
+        str += "}\n";
+    };
+
+    Internal *internal = internals[0];
+    travers(travers, internal);
+    str += "}\n";
 
     if (!qmlFile.open(QIODevice::WriteOnly))
     {
-        qmlFile.close();
+        qDebug() << "QML file not open!";
+        return;
     }
     else
     {
@@ -135,8 +168,9 @@ void QmlParser::generateQML()
         qmlFile.close();
     }
 
-    QQmlApplicationEngine engine;
-    engine.load(QUrl("file:F:/Development/C++/QmlTranslator/test.qml"));
+    QQmlApplicationEngine *engine = new QQmlApplicationEngine;
+    engine->load(QUrl("file:F:/Development/C++/QmlTranslator/test.qml"));
+
 //    if (engine.rootObjects().isEmpty())
 //        return;
 }
