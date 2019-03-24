@@ -1,9 +1,9 @@
 #include "internal.h"
 
-QVariant Internal::getProperty(QDomNode &node, QString propertyName, QString propertyTag)
+QString Internal::getProperty(QDomNode &node, QString propertyName, QString propertyTag)
 {
     QDomNode childNode = node.firstChild();
-    QVariant result;
+    QString result;
 
     /// Плоский проход по потомкам widget'а
     /// Плоский означает проход только по этой глубине.
@@ -49,26 +49,21 @@ QVariant Internal::getProperty(QDomNode &node, QString propertyName, QString pro
 
 void Internal::generateFromUI(QDomNode &node)
 {
-    _className = node.attributes().namedItem("class").nodeValue();
+    _classNameUI = node.attributes().namedItem("class").nodeValue();
+
+    // Parsing for QML class name
+    if (_classNameUI == "QMainWindow")
+        _classNameQML = "Rectangle";
+    else if (_classNameUI == "QWidget")
+        _classNameQML = "Rectangle";
+    else if (_classNameUI == "QLabel")
+        _classNameQML = "Label";
+
     _name = node.attributes().namedItem("name").nodeValue();
-
-    _x = getProperty(node, QString("geometry"), QString("x")).toInt();
-    _y = getProperty(node, QString("geometry"), QString("y")).toInt();
-
-    _width  = getProperty(node, QString("geometry"), QString("width")).toInt();
-    _height = getProperty(node, QString("geometry"), QString("height")).toInt();
 }
 
 QString Internal::generateQML()
 {
-    return QString("Rectangle {\n "
-                   "x:%1\n"
-                   "y:%2\n"
-                   "width:%3\n"
-                   "height:%4\n"
-                   "border.color: \"black\"\n")
-            .arg(_x)
-            .arg(_y)
-            .arg(_width)
-            .arg(_height);
+    _QML = "%1 {\n";
+    return _QML;
 }

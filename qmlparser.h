@@ -1,7 +1,7 @@
 #ifndef QMLPARSER_H
 #define QMLPARSER_H
 
-#include "internal.h"
+#include "Internals/internal.h"
 
 #include <QObject>
 #include <QDebug>

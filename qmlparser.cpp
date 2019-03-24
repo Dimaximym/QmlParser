@@ -1,15 +1,9 @@
-#define ATTRIBUTE(name) attributes().namedItem(name).nodeValue()
-
 #include "qmlparser.h"
-#include "label.h"
+#include "Internals/label.h"
 
 QmlParser::QmlParser(QObject *parent)
     :QObject(parent)
 {
-
-
-    QString qmlCode;
-
     QFile file;
     file.setFileName("F:/Development/C++/QmlTranslator/mainwindow.ui");
 //    file.setFileName("F:/Development/C++/pronto/Src/Mac/Pronto.Shell/Forms/MailWidget/MailWidget.ui");
@@ -55,7 +49,7 @@ void QmlParser::generateInternals(QDomNode &_node, Internal *parent)
                 if (element.attribute("class", "") == "QLabel")
                     internal = new Label;
                 else
-                    internal = new Internal;
+                    internal = new Widget;
 
                 internal->generateFromUI(node);
             }
@@ -78,7 +72,12 @@ void QmlParser::generateInternals(QDomNode &_node, Internal *parent)
         }
 
         if (node.hasChildNodes())
-            generateInternals(node, internal);
+        {
+            if (internal != nullptr)
+                generateInternals(node, internal);
+            else
+                generateInternals(node, parent);
+        }
         node = node.nextSibling();
     }
 }
@@ -92,7 +91,7 @@ void QmlParser::outputChild(Internal *obj)
         {
             QString tab;
             for (int i = 0; i < deep; ++i) tab += "  ";
-            qDebug() << tab << child->_className << "(" << child->_name << ")";
+            qDebug() << tab << child->_classNameUI << "(" << child->_name << ")";
             ++deep;
             outputChild(child);
             --deep;
@@ -105,7 +104,7 @@ void QmlParser::outputInternal()
     qDebug() << "\n\nCreating QML...";
     for(auto obj: internals)
     {
-        qDebug() << obj->_className;
+        qDebug() << obj->_classNameUI;
         outputChild(obj);
     }
 }
@@ -116,21 +115,6 @@ void QmlParser::generateQML()
     QString str = "import QtQuick 2.0\nimport QtQuick.Controls 2.1\n"
                   "import QtQuick.Window 2.0\n"
                   "ApplicationWindow {\nid: window\nvisible: true\n";
-//                  "Rectangle {"
-//                  "anchors.fill: parent;"
-//                  "color: \"red\";"
-//                  "}"
-//                  ""
-//                  ""
-//                  "}";
-
-    // TEST
-//    Internal internal;
-//    Label label;
-
-//    str += internal.generateQML() + "} }";
-
-    // Parsing internal view
 
     /// Лямбда-функция для рекурсивного обхода
     /// дерева _internals
@@ -142,18 +126,28 @@ void QmlParser::generateQML()
         str += internal->generateQML();
         if (internal->_children.isEmpty())
         {
+            // Закрытие layout
+            if (internal->hasLayout())
+                str += "}\n";
+            // Закрытие внешнего блока (если нет детей)
             str += "}\n";
             return;
         }
+        // Проход по всем детям объекта
         for (int i = 0; i < internal->_children.size(); ++i)
         {
             self(self, internal->_children.at(i));
         }
+        // Закрытие layout
+        if (internal->hasLayout())
+            str += "}\n";
+        // Закрытие внешнего блока после обхода всех детей
         str += "}\n";
     };
 
     Internal *internal = internals[0];
     travers(travers, internal);
+    // Скобка закрывает блок ApplicationWindow
     str += "}\n";
 
     if (!qmlFile.open(QIODevice::WriteOnly))
@@ -170,7 +164,4 @@ void QmlParser::generateQML()
 
     QQmlApplicationEngine *engine = new QQmlApplicationEngine;
     engine->load(QUrl("file:F:/Development/C++/QmlTranslator/test.qml"));
-
-//    if (engine.rootObjects().isEmpty())
-//        return;
 }

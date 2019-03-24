@@ -18,30 +18,36 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>40</y>
-      <width>91</width>
-      <height>31</height>
+      <y>10</y>
+      <width>101</width>
+      <height>50</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">border: 1px solid black</string>
     </property>
-    <widget class="QLabel" name="layoutLabel">
-     <property name="geometry">
-      <rect>
-       <x>9</x>
-       <y>9</y>
-       <width>71</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border: 0px solid black</string>
-     </property>
-     <property name="text">
-      <string>Layout Text!</string>
-     </property>
-    </widget>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="layoutLabel">
+       <property name="styleSheet">
+        <string notr="true">border: 0px solid black</string>
+       </property>
+       <property name="text">
+        <string>Layout Text!</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="layoutLabel2">
+       <property name="styleSheet">
+        <string notr="true">border: 0px solid black</string>
+       </property>
+       <property name="text">
+        <string>2nd Layout Text</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
    <widget class="QWidget" name="freeWidget" native="true">
     <property name="geometry">
