@@ -39,28 +39,6 @@ QString Widget::generateQML()
         _QML += QString("Column {\n");
 
     return _QML;
-
-
-//    QString result;
-
-//    result += QString("Rectangle {\n"
-//                   "x:%1\n"
-//                   "y:%2\n"
-//                   "width:%3\n"
-//                   "height:%4\n"
-//                   "border.color: \"black\"\n")
-//            .arg(_x)
-//            .arg(_y)
-//            .arg(_width)
-//            .arg(_height);
-
-//    if (_hasLayout)
-//    {
-//        result += QString("Column {\n");
-////                  .arg(_layoutName);
-//    }
-
-//    return result;
 }
 
 void Widget::findLayout(QDomNode &node)
