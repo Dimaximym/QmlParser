@@ -1,5 +1,6 @@
 #include "qmlparser.h"
 #include "Internals/label.h"
+#include "Internals/widget.h"
 
 QmlParser::QmlParser(QObject *parent)
     :QObject(parent)
@@ -112,13 +113,31 @@ void QmlParser::outputInternal()
 void QmlParser::generateQML()
 {
     QFile qmlFile("F:/Development/C++/QmlTranslator/test.qml");
-    QString str = "import QtQuick 2.0\nimport QtQuick.Controls 2.1\n"
+
+    int w = 100;
+    int h = 100;
+
+    if (!internals.isEmpty())
+    {
+        Widget *tmp;
+        if ((tmp = dynamic_cast<Widget *>(internals.first())) != nullptr)
+        {
+            w = tmp->_width;
+            h = tmp->_height;
+        }
+    }
+
+    QString str = QString("import QtQuick 2.0\nimport QtQuick.Controls 2.1\n"
                   "import QtQuick.Window 2.0\n"
-                  "ApplicationWindow {\nid: window\nvisible: true\n";
+                  "ApplicationWindow {\nid: window\nvisible: true\n "
+                  "width: %1\n"
+                  "height: %2\n")
+                  .arg(w)
+                  .arg(h);
 
     /// Лямбда-функция для рекурсивного обхода
     /// дерева _internals
-    auto travers = [ &str/*, &endRecursion, &result*/](auto &self, Internal *internal)
+    auto travers = [ &str](auto &self, Internal *internal)
     {
         if (internal == nullptr)
             return;
