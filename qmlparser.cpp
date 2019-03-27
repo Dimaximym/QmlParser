@@ -1,6 +1,7 @@
 #include "qmlparser.h"
 #include "Internals/label.h"
 #include "Internals/widget.h"
+#include "Internals/button.h"
 
 QmlParser::QmlParser(QObject *parent)
     :QObject(parent)
@@ -47,10 +48,7 @@ void QmlParser::generateInternals(QDomNode &_node, Internal *parent)
         {
             if (element.tagName() == "widget")
             {
-                if (element.attribute("class", "") == "QLabel")
-                    internal = new Label;
-                else
-                    internal = new Widget;
+                internal = createInternal(element.attribute("class", ""));
 
                 internal->generateFromUI(node);
             }
@@ -81,6 +79,16 @@ void QmlParser::generateInternals(QDomNode &_node, Internal *parent)
         }
         node = node.nextSibling();
     }
+}
+
+Internal *QmlParser::createInternal(QString className)
+{
+    if (className == "QLabel")
+        return new Label;
+    if (className == "QPushButton")
+        return new Button;
+    else
+        return new Widget;
 }
 
 void QmlParser::outputChild(Internal *obj)

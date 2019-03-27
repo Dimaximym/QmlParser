@@ -31,14 +31,18 @@ SOURCES += \
     qmlparser.cpp \
     Internals/internal.cpp \
     Internals/label.cpp \
-    Internals/widget.cpp
+    Internals/widget.cpp \
+    Internals/button.cpp \
+    Internals/textedit.cpp
 
 HEADERS += \
         mainwindow.h \
     qmlparser.h \
     Internals/internal.h \
     Internals/label.h \
-    Internals/widget.h
+    Internals/widget.h \
+    Internals/button.h \
+    Internals/textedit.h
 
 FORMS += \
         mainwindow.ui

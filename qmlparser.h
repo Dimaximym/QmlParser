@@ -24,6 +24,7 @@ public:
     // Generate QVector of internal view .ui file
     void generateInternals(QDomNode &node, Internal *parent = nullptr);
     void generateQML();
+    Internal* createInternal(QString className);
 
     // Testing functional
     void outputInternal();

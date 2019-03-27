@@ -58,6 +58,8 @@ void Internal::generateFromUI(QDomNode &node)
         _classNameQML = "Rectangle";
     else if (_classNameUI == "QLabel")
         _classNameQML = "Label";
+    else if (_classNameUI == "QPushButton")
+        _classNameQML = "Button";
 
     _name = node.attributes().namedItem("name").nodeValue();
 }
