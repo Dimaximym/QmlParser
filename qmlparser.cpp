@@ -3,6 +3,8 @@
 #include "Internals/widget.h"
 #include "Internals/button.h"
 #include "Internals/textinput.h"
+#include "Internals/checkbox.h"
+#include "Internals/radiobutton.h"
 
 QmlParser::QmlParser(QObject *parent)
     :QObject(parent)
@@ -90,6 +92,10 @@ Internal *QmlParser::createInternal(QString className)
         return new Button;
     if (className == "QLineEdit")
         return new TextInput;
+    if (className == "QCheckBox")
+        return new CheckBox;
+    if (className == "QRadioButton")
+        return new RadioButton;
     else
         return new Widget;
 }

@@ -62,6 +62,10 @@ void Internal::generateFromUI(QDomNode &node)
         _classNameQML = "Button";
     else if (_classNameUI == "QLineEdit")
         _classNameQML = "TextInput";
+    else if (_classNameUI == "QCheckBox")
+        _classNameQML = "CheckBox";
+    else if (_classNameUI == "QRadioButton")
+        _classNameQML = "RadioButton";
 
     _name = node.attributes().namedItem("name").nodeValue();
 }

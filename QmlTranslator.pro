@@ -33,7 +33,9 @@ SOURCES += \
     Internals/label.cpp \
     Internals/widget.cpp \
     Internals/button.cpp \
-    Internals/textinput.cpp
+    Internals/textinput.cpp \
+    Internals/checkbox.cpp \
+    Internals/radiobutton.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,7 +44,9 @@ HEADERS += \
     Internals/label.h \
     Internals/widget.h \
     Internals/button.h \
-    Internals/textinput.h
+    Internals/textinput.h \
+    Internals/checkbox.h \
+    Internals/radiobutton.h
 
 FORMS += \
         mainwindow.ui
