@@ -2,6 +2,7 @@
 #include "Internals/label.h"
 #include "Internals/widget.h"
 #include "Internals/button.h"
+#include "Internals/textinput.h"
 
 QmlParser::QmlParser(QObject *parent)
     :QObject(parent)
@@ -87,6 +88,8 @@ Internal *QmlParser::createInternal(QString className)
         return new Label;
     if (className == "QPushButton")
         return new Button;
+    if (className == "QLineEdit")
+        return new TextInput;
     else
         return new Widget;
 }

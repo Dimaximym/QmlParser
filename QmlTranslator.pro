@@ -33,7 +33,7 @@ SOURCES += \
     Internals/label.cpp \
     Internals/widget.cpp \
     Internals/button.cpp \
-    Internals/textedit.cpp
+    Internals/textinput.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,7 +42,7 @@ HEADERS += \
     Internals/label.h \
     Internals/widget.h \
     Internals/button.h \
-    Internals/textedit.h
+    Internals/textinput.h
 
 FORMS += \
         mainwindow.ui

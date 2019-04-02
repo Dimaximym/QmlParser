@@ -60,6 +60,8 @@ void Internal::generateFromUI(QDomNode &node)
         _classNameQML = "Label";
     else if (_classNameUI == "QPushButton")
         _classNameQML = "Button";
+    else if (_classNameUI == "QLineEdit")
+        _classNameQML = "TextInput";
 
     _name = node.attributes().namedItem("name").nodeValue();
 }
