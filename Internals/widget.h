@@ -24,6 +24,7 @@ public:
     int _width;
     int _height;
 
+    QString _text;
 
 private:
     /// Ищет в заданном ноде присутствие layout

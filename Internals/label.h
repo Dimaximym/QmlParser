@@ -7,7 +7,6 @@ class Label : public Widget
 {
 public:
     Label() {}
-    QString _text;
 
     void generateFromUI(QDomNode &node) override;
     QString generateQML() override;

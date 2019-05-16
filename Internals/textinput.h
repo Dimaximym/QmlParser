@@ -7,8 +7,6 @@ class TextInput : public Widget
 public:
     TextInput() {}
 
-    QString _text;
-
     void generateFromUI(QDomNode &node) override;
     QString generateQML() override;
 };

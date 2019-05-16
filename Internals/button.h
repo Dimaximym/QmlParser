@@ -7,8 +7,6 @@ class Button : public Widget
 public:
     Button() {}
 
-    QString _text;
-
     void generateFromUI(QDomNode &node) override;
     QString generateQML() override;
 };

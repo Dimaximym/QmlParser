@@ -18,7 +18,7 @@ class QmlParser : public QObject
 {
     Q_OBJECT
 public:
-    QmlParser(QObject *parent);
+    QmlParser(QObject *parent = nullptr);
     virtual ~QmlParser() {}
 
     // Generate QVector of internal view .ui file
@@ -30,6 +30,7 @@ public:
     void outputInternal();
     void outputChild(Internal *obj);
 
+private:
     QVector<Internal*> internals;
 };
 #endif // QMLPARSER_H

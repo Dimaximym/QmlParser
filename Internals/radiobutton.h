@@ -7,7 +7,7 @@ class RadioButton : public Widget
 public:
     RadioButton() {}
 
-    QString _text;
+    bool    _checked;
 
     void generateFromUI(QDomNode &node) override;
     QString generateQML() override;

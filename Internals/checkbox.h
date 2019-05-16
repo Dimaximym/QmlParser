@@ -7,7 +7,7 @@ class CheckBox : public Widget
 public:
     CheckBox() {}
 
-    QString _text;
+    bool    _checked;
 
     void generateFromUI(QDomNode &node) override;
     QString generateQML() override;
