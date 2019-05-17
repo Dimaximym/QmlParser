@@ -28,25 +28,25 @@ CONFIG += c++14
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    qmlparser.cpp \
     Internals/internal.cpp \
     Internals/label.cpp \
     Internals/widget.cpp \
     Internals/button.cpp \
     Internals/textinput.cpp \
     Internals/checkbox.cpp \
-    Internals/radiobutton.cpp
+    Internals/radiobutton.cpp \
+    qmlgenerator.cpp
 
 HEADERS += \
         mainwindow.h \
-    qmlparser.h \
     Internals/internal.h \
     Internals/label.h \
     Internals/widget.h \
     Internals/button.h \
     Internals/textinput.h \
     Internals/checkbox.h \
-    Internals/radiobutton.h
+    Internals/radiobutton.h \
+    qmlgenerator.h
 
 FORMS += \
         mainwindow.ui

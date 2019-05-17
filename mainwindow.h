@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "qmlparser.h"
+#include "qmlgenerator.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,7 +18,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    QmlParser _parser;
+    QmlGenerator _parser;
 };
 
 #endif // MAINWINDOW_H
