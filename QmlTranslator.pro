@@ -27,7 +27,6 @@ CONFIG += c++14
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
     Internals/internal.cpp \
     Internals/label.cpp \
     Internals/widget.cpp \
@@ -35,10 +34,10 @@ SOURCES += \
     Internals/textinput.cpp \
     Internals/checkbox.cpp \
     Internals/radiobutton.cpp \
-    qmlgenerator.cpp
+    qmlgenerator.cpp \
+    qtwidgetwindow.cpp
 
 HEADERS += \
-        mainwindow.h \
     Internals/internal.h \
     Internals/label.h \
     Internals/widget.h \
@@ -46,10 +45,11 @@ HEADERS += \
     Internals/textinput.h \
     Internals/checkbox.h \
     Internals/radiobutton.h \
-    qmlgenerator.h
+    qmlgenerator.h \
+    qtwidgetwindow.h
 
 FORMS += \
-        mainwindow.ui
+        qtwidgetwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
