@@ -11,7 +11,6 @@ QmlGenerator::QmlGenerator(QObject *parent)
 {
     QFile file;
     file.setFileName("F:/Development/C++/QmlTranslator/qtwidgetwindow.ui");
-//    file.setFileName("F:/Development/C++/pronto/Src/Mac/Pronto.Shell/Forms/MailWidget/MailWidget.ui");
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -129,7 +128,7 @@ void QmlGenerator::outputInternal()
 
 void QmlGenerator::generateQML()
 {
-    QFile qmlFile("F:/Development/C++/QmlTranslator/test.qml");
+    QFile qmlFile("F:/Development/C++/QmlTranslator/output.qml");
 
     int w = 100;
     int h = 100;
