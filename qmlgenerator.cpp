@@ -145,39 +145,44 @@ void QmlGenerator::generateQML()
 
     QString str = QString("import QtQuick 2.0\nimport QtQuick.Controls 2.1\n"
                   "import QtQuick.Window 2.0\n"
-                  "ApplicationWindow {\nid: window\nvisible: true\n "
-                  "width: %1\n"
-                  "height: %2\n")
+                  "ApplicationWindow {\n\tid: window\n\tvisible: true\n "
+                  "\twidth: %1\n"
+                  "\theight: %2\n\t")
                   .arg(w)
                   .arg(h);
 
+    // Глубина вложенности для вывода табуляции
+    int deep = 1;
+
     /// Лямбда-функция для рекурсивного обхода
     /// дерева _internals
-    auto travers = [ &str](auto &self, Internal *internal)
+    auto travers = [ this, &str, &deep](auto &self, Internal *internal)
     {
         if (internal == nullptr)
             return;
 
-        str += internal->generateQML();
+        str += fillTabs(internal->generateQML(), deep);
         if (internal->_children.isEmpty())
         {
             // Закрытие layout
             if (internal->hasLayout())
-                str += "}\n";
+                str += fillTabs("}\n", deep);
             // Закрытие внешнего блока (если нет детей)
-            str += "}\n";
+            str += fillTabs("}\n", deep);
             return;
         }
         // Проход по всем детям объекта
         for (int i = 0; i < internal->_children.size(); ++i)
         {
+            deep++;
             self(self, internal->_children.at(i));
+            deep--;
         }
         // Закрытие layout
         if (internal->hasLayout())
-            str += "}\n";
+            str += fillTabs("}\n", deep);
         // Закрытие внешнего блока после обхода всех детей
-        str += "}\n";
+        str += fillTabs("}\n", deep);
     };
 
     Internal *internal = internals[0];
@@ -185,7 +190,7 @@ void QmlGenerator::generateQML()
     // Скобка закрывает блок ApplicationWindow
     str += "}\n";
 
-    if (!qmlFile.open(QIODevice::WriteOnly))
+    if (!qmlFile.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text))
     {
         qDebug() << "QML file not open!";
         return;
@@ -198,5 +203,16 @@ void QmlGenerator::generateQML()
     }
 
     QQmlApplicationEngine *engine = new QQmlApplicationEngine;
-    engine->load(QUrl("file:F:/Development/C++/QmlTranslator/test.qml"));
+    engine->load(QUrl("file:F:/Development/C++/QmlTranslator/output.qml"));
+}
+
+QString QmlGenerator::fillTabs(QString source, int deep)
+{
+    // Генерация табуляции
+    QString tab;
+    for (int i = 0; i < deep; ++i) tab += "\t";
+
+    if (source.isEmpty()) return QString();
+    const QRegExp re{QString("(") + "\\n" + ")"};
+    return source.replace(re, "\\1" + tab);
 }

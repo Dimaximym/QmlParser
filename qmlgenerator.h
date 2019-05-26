@@ -26,6 +26,8 @@ public:
     void generateQML();
     Internal* createInternal(QString className);
 
+    QString fillTabs(QString source, int deep);
+
     // Testing functional
     void outputInternal();
     void outputChild(Internal *obj);
