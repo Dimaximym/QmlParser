@@ -21,9 +21,9 @@ QString Widget::generateQML()
     if (!(_parent != nullptr && _parent->hasLayout()))
     {
         _QML += QString("x:%1\n"
-                       "y:%2\n"
-                       "width:%3\n"
-                       "height:%4\n")
+                        "y:%2\n"
+                        "width:%3\n"
+                        "height:%4\n")
                 .arg(_x)
                 .arg(_y)
                 .arg(_width)

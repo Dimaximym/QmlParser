@@ -11,7 +11,10 @@ QString Button::generateQML()
 {
     _QML = Widget::generateQML();
 
-    _QML += QString("text:%1\n")
+    _QML += QString("background: Rectangle{\n"
+                    "\tcolor: qssStyle.background\n"
+                    "}\n"
+                    "text:%1\n")
             .arg("\"" + _text + "\"");
 
     return _QML;

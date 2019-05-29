@@ -128,8 +128,6 @@ void QmlGenerator::outputInternal()
 
 void QmlGenerator::generateQML()
 {
-    QFile qmlFile("F:/Development/C++/QmlTranslator/output.qml");
-
     int w = 100;
     int h = 100;
 
@@ -143,10 +141,7 @@ void QmlGenerator::generateQML()
         }
     }
 
-    QString str = QString("import QtQuick 2.0\nimport QtQuick.Controls 2.1\n"
-                  "import QtQuick.Window 2.0\n"
-                  "ApplicationWindow {\n\tid: window\n\tvisible: true\n "
-                  "\twidth: %1\n"
+    QString str = QString("\twidth: %1\n"
                   "\theight: %2\n\t")
                   .arg(w)
                   .arg(h);
@@ -190,20 +185,36 @@ void QmlGenerator::generateQML()
     // Скобка закрывает блок ApplicationWindow
     str += "}\n";
 
+    QFile firstPartFile("F:/Development/C++/QmlTranslator/qml/FirstPart.qml");
+    QString firstPartText;
+    if (!firstPartFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << firstPartFile.fileName() << " file not open!";
+        return;
+    }
+    else
+    {
+        firstPartText = firstPartFile.readAll();
+//        QTextStream out(&firstPartFile);
+//        out << str;
+        firstPartFile.close();
+    }
+
+    QFile qmlFile("F:/Development/C++/QmlTranslator/qml/output.qml");
     if (!qmlFile.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text))
     {
-        qDebug() << "QML file not open!";
+        qDebug() << qmlFile.fileName() << " file not open!";
         return;
     }
     else
     {
         QTextStream out(&qmlFile);
-        out << str;
+        out << firstPartText << str;
         qmlFile.close();
     }
 
     QQmlApplicationEngine *engine = new QQmlApplicationEngine;
-    engine->load(QUrl("file:F:/Development/C++/QmlTranslator/output.qml"));
+    engine->load(QUrl("file:F:/Development/C++/QmlTranslator/qml/output.qml"));
 }
 
 QString QmlGenerator::fillTabs(QString source, int deep)

@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>qml.qml</file>
+        <file>Styles/QssStyle.qml</file>
+        <file>Styles/script.js</file>
+        <file>output.qml</file>
     </qresource>
 </RCC>
