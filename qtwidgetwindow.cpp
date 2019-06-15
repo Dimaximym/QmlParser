@@ -12,3 +12,8 @@ QtWidgetWindow::~QtWidgetWindow()
 {
     delete ui;
 }
+
+void QtWidgetWindow::startGenerator(const QString &path)
+{
+    _parser = new QmlGenerator(path, this);
+}

@@ -18,7 +18,7 @@ class QmlGenerator : public QObject
 {
     Q_OBJECT
 public:
-    QmlGenerator(QObject *parent = nullptr);
+    QmlGenerator(const QString &path, QObject *parent = nullptr);
     virtual ~QmlGenerator() {}
 
     // Generate QVector of internal view .ui file

@@ -16,9 +16,11 @@ public:
     explicit QtWidgetWindow(QWidget *parent = nullptr);
     ~QtWidgetWindow();
 
+    void startGenerator(const QString &path);
+
 private:
     Ui::MainWindow *ui;
-    QmlGenerator _parser;
+    QmlGenerator *_parser;
 };
 
 #endif // MAINWINDOW_H

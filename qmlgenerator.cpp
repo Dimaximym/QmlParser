@@ -6,16 +6,17 @@
 #include "Internals/checkbox.h"
 #include "Internals/radiobutton.h"
 
-QmlGenerator::QmlGenerator(QObject *parent)
+QmlGenerator::QmlGenerator(const QString &path, QObject *parent)
     :QObject(parent)
 {
     QFile file;
-    file.setFileName("F:/Development/C++/QmlTranslator/qtwidgetwindow.ui");
+    //"F:/Development/C++/QmlTranslator/qtwidgetwindow.ui"
+    file.setFileName(path);
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qDebug() << "Error: open";
-//        return;
+        qDebug() << "Error: can't open Qt Widget's file";
+        return;
     }
 
     /// Реализация через QDomDocument
@@ -195,8 +196,6 @@ void QmlGenerator::generateQML()
     else
     {
         firstPartText = firstPartFile.readAll();
-//        QTextStream out(&firstPartFile);
-//        out << str;
         firstPartFile.close();
     }
 
