@@ -31,8 +31,8 @@ QString Widget::generateQML()
     }
 
     // TEST.Delete later
-    if (_classNameUI == "QWidget")
-        _QML += "border.color: \"black\"\n";
+//    if (_classNameUI == "QWidget")
+//        _QML += "border.color: \"black\"\n";
     // END TEST
 
     if (hasLayout())

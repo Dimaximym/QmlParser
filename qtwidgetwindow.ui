@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>465</width>
-    <height>318</height>
+    <width>490</width>
+    <height>334</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border: 1px solid black</string>
+     <string notr="true"/>
     </property>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
@@ -59,7 +59,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border: 1px solid black</string>
+     <string notr="true"/>
     </property>
     <widget class="QLabel" name="freeLabel">
      <property name="geometry">
@@ -149,30 +149,30 @@
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="1" column="0">
+     <item row="2" column="0">
       <widget class="QRadioButton" name="radioButton_3">
        <property name="text">
-        <string>RadioButton2</string>
+        <string>RadioButton</string>
        </property>
        <property name="checked">
         <bool>false</bool>
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
+     <item row="1" column="0">
       <widget class="QRadioButton" name="radioButton_2">
        <property name="text">
-        <string>RadioButton1</string>
+        <string>RadioButton</string>
        </property>
        <property name="checked">
         <bool>true</bool>
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
+     <item row="0" column="0">
       <widget class="QRadioButton" name="radioButton">
        <property name="text">
-        <string>RadioButton3</string>
+        <string>RadioButton</string>
        </property>
       </widget>
      </item>

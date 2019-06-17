@@ -10,7 +10,7 @@ QmlGenerator::QmlGenerator(const QString &path, QObject *parent)
     :QObject(parent)
 {
     QFile file;
-    //"F:/Development/C++/QmlTranslator/qtwidgetwindow.ui"
+    //F:/Development/C++/QmlTranslator/qtwidgetwindow.ui
     file.setFileName(path);
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
